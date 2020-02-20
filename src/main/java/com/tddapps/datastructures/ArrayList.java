@@ -1,6 +1,5 @@
 package com.tddapps.datastructures;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -27,15 +26,10 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
-            if (o == null){
-                if (data[i] == null){
-                    return true;
-                }
-            }
-            else {
-                if (data[i] != null && data[i].equals(o)){
-                    return true;
-                }
+            var e = data[i];
+            if ((o == null && e == null) ||
+                (e != null && e.equals(o))){
+                return true;
             }
         }
         return false;
