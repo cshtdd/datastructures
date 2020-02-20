@@ -4,14 +4,23 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class ArrayList<T> implements Collection<T> {
+    private boolean elementAdded = false;
+    private int size = 0;
+
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
+    }
+
+    @Override
+    public boolean add(T t) {
+        size++;
+        return true;
     }
 
     @Override
@@ -32,11 +41,6 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public <T1> T1[] toArray(T1[] a) {
         return null;
-    }
-
-    @Override
-    public boolean add(T t) {
-        return false;
     }
 
     @Override
