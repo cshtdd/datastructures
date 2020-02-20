@@ -39,4 +39,18 @@ public class ArrayListTest {
         assertTrue(l.contains("2"));
     }
 
+    @Test
+    void AddNulls(){
+        var l = new ArrayList<String>();
+
+        assertFalse(l.contains(null));
+        assertTrue(l.add(null));
+        assertFalse(l.isEmpty());
+
+        assertTrue(l.contains(null));
+        assertFalse(l.contains("1"));
+
+        assertTrue(l.add("2"));
+        assertTrue(l.contains("2"));
+    }
 }

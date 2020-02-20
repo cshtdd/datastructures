@@ -27,8 +27,15 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
-            if (data[i].equals(o)){
-                return true;
+            if (o == null){
+                if (data[i] == null){
+                    return true;
+                }
+            }
+            else {
+                if (data[i] != null && data[i].equals(o)){
+                    return true;
+                }
             }
         }
         return false;
