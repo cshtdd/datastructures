@@ -25,4 +25,18 @@ public class ArrayListTest {
         assertFalse(l.isEmpty());
         assertEquals(2, l.size());
     }
+
+    @Test
+    void SearchesAddedElements(){
+        var l = new ArrayList<String>();
+
+        assertFalse(l.contains("1"));
+        assertTrue(l.add("1"));
+
+        assertTrue(l.contains("1"));
+
+        assertTrue(l.add("2"));
+        assertTrue(l.contains("2"));
+    }
+
 }

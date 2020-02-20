@@ -1,11 +1,12 @@
 package com.tddapps.datastructures;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class ArrayList<T> implements Collection<T> {
-    private boolean elementAdded = false;
     private int size = 0;
+    private Object[] data = new Object[100];
 
     @Override
     public int size() {
@@ -19,12 +20,17 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean add(T t) {
-        size++;
+        data[size++] = t;
         return true;
     }
 
     @Override
     public boolean contains(Object o) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(o)){
+                return true;
+            }
+        }
         return false;
     }
 
