@@ -4,11 +4,20 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class ArrayList<T> implements Collection<T> {
-    static final int DEFAULT_CAPACITY = 100;
+    static final int DEFAULT_CAPACITY = 10;
 
     private int size = 0;
-    private int capacity = DEFAULT_CAPACITY;
-    private Object[] data = new Object[capacity];
+    private int capacity;
+    private Object[] data;
+
+    public ArrayList(){
+        this(DEFAULT_CAPACITY);
+    }
+
+    public ArrayList(int initialCapacity){
+        capacity = initialCapacity;
+        data = new Object[capacity];
+    }
 
     public int capacity(){
         return capacity;

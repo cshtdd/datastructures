@@ -11,7 +11,20 @@ public class ArrayListTest {
 
         assertTrue(l.isEmpty());
         assertEquals(0, l.size());
-        assertEquals(ArrayList.DEFAULT_CAPACITY, l.capacity());
+    }
+
+    @Test
+    void DefaultCapacity() {
+        var l = new ArrayList<>();
+
+        assertEquals(10, l.capacity());
+    }
+
+    @Test
+    void CapacityCanBeDefined() {
+        var l = new ArrayList<>(1024);
+
+        assertEquals(1024, l.capacity());
     }
 
     @Test
