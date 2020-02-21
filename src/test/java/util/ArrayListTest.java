@@ -49,4 +49,12 @@ public class ArrayListTest {
             l.toArray(new Long[6]);
         });
     }
+
+    @Test
+    void DoesNotThrowAfterIteratingAndModifyingACollectionOfOneElement(){
+        var l = new com.tddapps.datastructures.ArrayList<>();
+        l.add("1");
+
+        l.forEach(i -> l.add("1"));
+    }
 }
