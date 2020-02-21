@@ -1,4 +1,5 @@
 package com.tddapps.datastructures;
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -71,7 +72,14 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        if (a.length < size){
+            var result = (T1[])Array.newInstance(a.getClass().getComponentType(), size);
+            System.arraycopy(data, 0, result, 0, size);
+            return result;
+        }
+
+        System.arraycopy(data, 0, a, 0, size);
+        return a;
     }
 
     @Override

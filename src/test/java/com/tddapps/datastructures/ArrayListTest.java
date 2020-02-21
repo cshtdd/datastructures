@@ -160,4 +160,53 @@ public class ArrayListTest {
 
         assertArrayEquals(expected, l.toArray());
     }
+
+    @Test
+    void toArrayCopiesElementsToTheSuppliedArrayWhenThereIsEnoughCapacity(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.add(4);
+
+        var buffer = new Integer[6];
+        assertArrayEquals(new Integer[]{ null, null, null, null, null, null }, buffer);
+
+
+        var result = l.toArray(buffer);
+
+
+        assertArrayEquals(new Integer[]{ 1, 2, 3, 4, null, null }, buffer);
+        assertArrayEquals(new Integer[]{ 1, 2, 3, 4, null, null }, result);
+    }
+
+    @Test
+    void toArrayCreatesANewArrayWhenThereIsNotEnoughCapacity(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.add(4);
+
+        var buffer = new Integer[2];
+        assertArrayEquals(new Integer[]{ null, null }, buffer);
+
+
+        var result = l.toArray(buffer);
+
+
+        assertArrayEquals(new Integer[]{ null, null }, buffer);
+        assertArrayEquals(new Integer[]{ 1, 2, 3, 4 }, result);
+    }
+
+    @Test
+    void toArrayFailsWhenTypesDoNotMatch(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+
+        assertThrows(ArrayStoreException.class, () -> {
+            l.toArray(new Long[20]);
+        });
+    }
 }
