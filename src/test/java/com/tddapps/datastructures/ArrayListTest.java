@@ -118,4 +118,34 @@ public class ArrayListTest {
         assertEquals(5, l.size());
         assertEquals(8, l.capacity());
     }
+
+    @Test
+    void CannotIterateThroughAnEmptyList(){
+        final int[] count = {0};
+
+        new ArrayList<String>().forEach(s -> count[0] += 1);
+
+        assertEquals(0, count[0]);
+    }
+
+    @Test
+    void CanIterate(){
+        final int[] count = {0};
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+        l.add("3");
+        l.add("4");
+
+        var elements = new String[4];
+        l.forEach(s -> {
+            elements[count[0]] = (String)s;
+            count[0] += 1;
+        });
+
+        assertEquals("1", elements[0]);
+        assertEquals("2", elements[1]);
+        assertEquals("3", elements[2]);
+        assertEquals("4", elements[3]);
+    }
 }

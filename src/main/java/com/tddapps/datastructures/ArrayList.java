@@ -1,5 +1,4 @@
 package com.tddapps.datastructures;
-
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -60,7 +59,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayIterator<>(data, size);
     }
 
     @Override
