@@ -17,4 +17,12 @@ public class ArrayListTest {
 
         assertTrue(l.contains(null));
     }
+
+    @Test
+    void AddEmptyCapacity(){
+        var l = new ArrayList<String>(0);
+
+        assertTrue(l.add("1"));
+        assertTrue(l.contains("1"));
+    }
 }
