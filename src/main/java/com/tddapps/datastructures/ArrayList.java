@@ -72,14 +72,14 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
+        var result = a;
+
         if (a.length < size){
-            var result = (T1[])Array.newInstance(a.getClass().getComponentType(), size);
-            System.arraycopy(data, 0, result, 0, size);
-            return result;
+            result = (T1[])Array.newInstance(a.getClass().getComponentType(), size);
         }
 
-        System.arraycopy(data, 0, a, 0, size);
-        return a;
+        System.arraycopy(data, 0, result, 0, size);
+        return result;
     }
 
     @Override
