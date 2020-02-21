@@ -142,7 +142,20 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        var result = false;
+
+        for (Object o : c){
+            var elementRemoved = false;
+            var elementRemovedOnce = false;
+            do {
+                elementRemovedOnce = remove(o);
+                elementRemoved = elementRemoved || elementRemovedOnce;
+            } while (elementRemovedOnce);
+
+            result = result || elementRemoved;
+        }
+
+        return result;
     }
 
     @Override

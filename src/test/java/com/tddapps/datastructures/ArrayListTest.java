@@ -460,4 +460,56 @@ public class ArrayListTest {
         assertEquals(1, l.size());
         assertEquals(2, l.capacity());
     }
+
+    @Test
+    void RemoveAllReturnsFalseWhenEmpty(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(2);
+
+        var l = new ArrayList<Integer>();
+        assertFalse(l.removeAll(l2));
+    }
+
+    @Test
+    void RemoveAllReturnsFalseWhenNoElementsProvided(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+
+        assertFalse(l.removeAll(new ArrayList<Integer>()));
+        assertEquals(2, l.size());
+    }
+
+    @Test
+    void RemoveAllReturnsFalseWhenNoElementsRemoved(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(3);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+
+        assertFalse(l.removeAll(l2));
+        assertEquals(2, l.size());
+    }
+
+    @Test
+    void RemoveAllDeletesAllOccurrencesOfEveryMatchingElement(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(2);
+        l2.add(null);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(2);
+        l.add(null);
+        l.add(3);
+        l.add(null);
+
+        assertTrue(l.removeAll(l2));
+
+        assertArrayEquals(new Integer[] { 1, 3 }, l.toArray());
+    }
 }
