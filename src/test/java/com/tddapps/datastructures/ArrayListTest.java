@@ -163,6 +163,28 @@ public class ArrayListTest {
     }
 
     @Test
+    void CannotRemoveWhileIterating(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.remove("1"));
+        });
+    }
+
+    @Test
+    void CannotRemoveWhileIteratingEvenIfElementsAreNotFound(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.remove("aaa"));
+        });
+    }
+
+    @Test
     void CannotAddAllWhileIterating(){
         var l2 = new ArrayList<>();
         l2.add("1");
