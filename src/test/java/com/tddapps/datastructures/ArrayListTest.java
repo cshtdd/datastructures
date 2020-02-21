@@ -148,4 +148,16 @@ public class ArrayListTest {
         assertEquals("3", elements[2]);
         assertEquals("4", elements[3]);
     }
+
+    @Test
+    void toArrayReturnsAnArray(){
+        var l = new ArrayList<Integer>(1000);
+        var expected = new Object[5];
+        for (int i = 0; i < 5; i++) {
+            l.add(i);
+            expected[i] = i;
+        }
+
+        assertArrayEquals(expected, l.toArray());
+    }
 }

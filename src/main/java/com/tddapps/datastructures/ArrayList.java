@@ -64,7 +64,9 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        var result = new Object[size];
+        System.arraycopy(data, 0, result, 0, size);
+        return result;
     }
 
     @Override
