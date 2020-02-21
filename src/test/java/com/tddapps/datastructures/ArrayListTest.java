@@ -177,14 +177,16 @@ public class ArrayListTest {
     }
 
     @Test
-    void CanAddAllAnEmptyListWhileIterating(){
+    void CannotAddAllAnEmptyListWhileIterating(){
         var l2 = new ArrayList<>();
 
         var l = new ArrayList<>();
         l.add("1");
         l.add("2");
 
-        l.forEach(i -> l.addAll(l2));
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.addAll(l2));
+        });
     }
 
     @Test
