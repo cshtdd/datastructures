@@ -329,4 +329,56 @@ public class ArrayListTest {
 
         assertFalse(l.addAll(new ArrayList<>()));
     }
+
+    @Test
+    void ContainsAllReturnsFalseWhenEmpty(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(2);
+
+        var l = new ArrayList<Integer>();
+        assertFalse(l.containsAll(l2));
+    }
+
+    @Test
+    void ContainsAllReturnsTrueWhenParametersIsEmpty(){
+        var l2 = new ArrayList<Integer>();
+
+        var l = new ArrayList<Integer>();
+        l.add(2);
+
+        assertTrue(l.containsAll(l2));
+    }
+
+    @Test
+    void ContainsAllReturnsTrueWhenAllElementsAreFound(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(2);
+        l2.add(null);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.add(4);
+        l.add(null);
+
+        assertTrue(l.containsAll(l2));
+    }
+
+    @Test
+    void ContainsAllReturnsFalseWhenAtLeastOneIsNotFound(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(2);
+        l2.add(null);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.add(4);
+
+        assertFalse(l.containsAll(l2));
+    }
 }

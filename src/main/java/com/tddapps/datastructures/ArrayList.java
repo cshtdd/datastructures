@@ -116,7 +116,17 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        if (isEmpty()){
+            return false;
+        }
+
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
