@@ -133,6 +133,10 @@ public class ArrayList<T> implements Collection<T> {
         }
         size--;
 
+        if (available() > size){
+            increaseCapacity(-(capacity() >> 1));
+        }
+
         return true;
     }
 

@@ -441,4 +441,23 @@ public class ArrayListTest {
         assertTrue(l.remove(1));
         assertArrayEquals(new Integer[]{ 3, 2 }, l.toArray());
     }
+
+    @Test
+    void RemoveReducesCapacityInHalfWhenTheListIsLessThanHalfFull(){
+        var l = new ArrayList<Integer>(4);
+        l.add(1);
+        l.add(2);
+        l.add(3);
+
+        assertEquals(3, l.size());
+        assertEquals(4, l.capacity());
+
+        assertTrue(l.remove(1));
+        assertEquals(2, l.size());
+        assertEquals(4, l.capacity());
+
+        assertTrue(l.remove(3));
+        assertEquals(1, l.size());
+        assertEquals(2, l.capacity());
+    }
 }
