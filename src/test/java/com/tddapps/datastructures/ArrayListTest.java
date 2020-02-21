@@ -296,4 +296,17 @@ public class ArrayListTest {
         assertTrue(l.addAll(l2));
         assertArrayEquals(new Integer[]{1, null, 2, 3}, l.toArray());
     }
+
+    @Test
+    void AddAllAllocatesCapacityOnce(){
+        var l2 = new ArrayList<Integer>();
+        for (int i = 0; i < 100; i++) {
+            l2.add(i);
+        }
+
+        var l = new ArrayList<Integer>(5);
+        l.addAll(l2);
+
+        assertEquals(100, l.capacity());
+    }
 }

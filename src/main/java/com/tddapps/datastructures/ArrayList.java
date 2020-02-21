@@ -50,6 +50,24 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
+    public boolean addAll(Collection<? extends T> c) {
+        changeOperationsCount++;
+        int availableCapacity = capacity() - size;
+        int additionsCount = c.size();
+        if (availableCapacity < additionsCount){
+            var capacityIncrease = additionsCount - availableCapacity;
+            var updatedCapacity = capacity() + capacityIncrease;
+            increaseCapacity(updatedCapacity);
+        }
+
+        c.forEach(i -> {
+            data[size++] = i;
+        });
+
+        return true;
+    }
+
+    @Override
     public boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
             var e = data[i];
@@ -96,12 +114,6 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        c.forEach(i -> add(i));
-        return true;
-    }
-
-    @Override
     public boolean removeAll(Collection<?> c) {
         return false;
     }
@@ -128,10 +140,13 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     private void doubleCapacity() {
-        int currentCapacity = capacity();
-        int updateCapacity = Math.max(2, currentCapacity << 1);
-        var newData = new Object[updateCapacity];
-        System.arraycopy(data, 0, newData, 0, currentCapacity);
+        int updatedCapacity = Math.max(2, capacity() << 1);
+        increaseCapacity(updatedCapacity);
+    }
+
+    private void increaseCapacity(int updatedCapacity){
+        var newData = new Object[updatedCapacity];
+        System.arraycopy(data, 0, newData, 0, size);
         data = newData;
     }
 }
