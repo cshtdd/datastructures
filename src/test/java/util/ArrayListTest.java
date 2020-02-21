@@ -60,6 +60,15 @@ public class ArrayListTest {
     }
 
     @Test
+    void CanAttemptToRemoveWhileIteratingWhenElementsAreNotFound(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        l.forEach(i -> l.remove("aaa"));
+    }
+
+    @Test
     void CannotAddAnEmptyListDuringAnIteration(){
         var l = new ArrayList<>();
         l.add("1");
