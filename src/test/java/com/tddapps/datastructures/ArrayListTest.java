@@ -381,4 +381,12 @@ public class ArrayListTest {
 
         assertFalse(l.containsAll(l2));
     }
+
+    @Test
+    void RemoveReturnsFalseWhenElementNotFound(){
+        var l = new ArrayList<Integer>();
+
+        assertFalse(l.remove(1));
+        assertFalse(l.remove(null));
+    }
 }
