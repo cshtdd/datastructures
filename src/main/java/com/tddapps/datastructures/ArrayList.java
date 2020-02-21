@@ -52,8 +52,13 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public boolean addAll(Collection<? extends T> c) {
         changeOperationsCount++;
-        int availableCapacity = capacity() - size;
         int additionsCount = c.size();
+
+        if (additionsCount == 0){
+            return false;
+        }
+
+        int availableCapacity = capacity() - size;
         if (availableCapacity < additionsCount){
             var capacityIncrease = additionsCount - availableCapacity;
             var updatedCapacity = capacity() + capacityIncrease;

@@ -322,4 +322,11 @@ public class ArrayListTest {
 
         assertEquals(100, l.capacity());
     }
+
+    @Test
+    void AddAllReturnsFalseWhenNewListIsEmpty(){
+        var l = new ArrayList<Integer>();
+
+        assertFalse(l.addAll(new ArrayList<>()));
+    }
 }
