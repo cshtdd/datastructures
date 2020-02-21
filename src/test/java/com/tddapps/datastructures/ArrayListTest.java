@@ -517,8 +517,10 @@ public class ArrayListTest {
     void RemoveAllReducesCapacityOnlyOnce(){
         var l2 = new ArrayList<String>();
         l2.add("x");
+        l2.add("z");
+        l2.add("x");
 
-        var l = new ArrayList<String>();
+        var l = new ArrayList<String>(8);
         l.add("y");
         l.add("x");
         l.add("x");

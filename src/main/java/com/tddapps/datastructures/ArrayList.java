@@ -142,19 +142,9 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        var result = false;
-
         var indexesToRemove = new ArrayList<Integer>(size);
 
         for (Object o : c){
-            var elementRemoved = false;
-            var elementRemovedOnce = false;
-            do {
-                elementRemovedOnce = remove(o);
-                elementRemoved = elementRemoved || elementRemovedOnce;
-            } while (elementRemovedOnce);
-
-            result = result || elementRemoved;
             for (int i = 0; i < size; i++) {
                 if (containsObjectAt(o, i)){
                     indexesToRemove.add(i);
@@ -162,17 +152,29 @@ public class ArrayList<T> implements Collection<T> {
             }
         }
 
-//        var indices = indexesToRemove.toArray();
-////        TODO get unique elements
-////        TODO sort
-//
-//        for (int i = 0; i < indexesToRemove.size; i++) {
-//
-//        }
-//
-//        return !indexesToRemove.isEmpty();
+        var indexes = indexesToRemove
+                .stream()
+                .distinct()
+                .sorted()
+                .toArray(Integer[]::new);
 
-        return result;
+        for (int i = indexes.length - 1; i >= 0; i--) {
+            var index = indexes[i];
+            shiftLeftAt(index);
+            size--;
+        }
+
+        if (isLessThanHalfFull()){
+            halveCapacity();
+        }
+
+        return indexes.length > 0;
+    }
+
+    private void shiftLeftAt(int index){
+        for (int i = index + 1; i < size; i++){
+            data[i - 1] = data[i];
+        }
     }
 
     @Override
