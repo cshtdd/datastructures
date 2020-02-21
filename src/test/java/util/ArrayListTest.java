@@ -66,6 +66,7 @@ public class ArrayListTest {
         l.add("2");
 
         l.forEach(i -> l.remove("aaa"));
+        l.forEach(i -> l.removeAll(new ArrayList<>(){{ add("aaa"); }}));
     }
 
     @Test
@@ -75,10 +76,17 @@ public class ArrayListTest {
         l.add("2");
 
         assertThrows(ConcurrentModificationException.class, () -> {
-            l.forEach(i-> {
-                l.addAll(new ArrayList<>());
-            });
+            l.forEach(i-> l.addAll(new ArrayList<>()));
         });
+    }
+
+    @Test
+    void CanRemoveAnEmptyListDuringAnIteration(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        l.forEach(i-> l.removeAll(new ArrayList<>()));
     }
 
     @Test
