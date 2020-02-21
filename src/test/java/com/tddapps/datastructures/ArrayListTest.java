@@ -268,4 +268,18 @@ public class ArrayListTest {
         assertEquals(0, l.size());
         assertTrue(l.isEmpty());
     }
+
+    @Test
+    void AddsAllTheElements(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(null);
+        l2.add(2);
+        l2.add(3);
+        assertArrayEquals(new Integer[]{1, null, 2, 3}, l2.toArray());
+
+        var l = new ArrayList<Integer>();
+        assertTrue(l.addAll(l2));
+        assertArrayEquals(new Integer[]{1, null, 2, 3}, l.toArray());
+    }
 }
