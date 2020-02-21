@@ -177,12 +177,6 @@ public class ArrayList<T> implements Collection<T> {
         return true;
     }
 
-    private void shiftLeftAt(int index){
-        for (int i = index + 1; i < size; i++){
-            data[i - 1] = data[i];
-        }
-    }
-
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
@@ -249,6 +243,12 @@ public class ArrayList<T> implements Collection<T> {
         var e = data[index];
         return (o == null && e == null) ||
                 (e != null && e.equals(o));
+    }
+
+    private void shiftLeftAt(int index){
+        for (int i = index + 1; i < size; i++){
+            data[i - 1] = data[i];
+        }
     }
 
     private void trackModification() {
