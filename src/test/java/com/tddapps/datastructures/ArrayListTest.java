@@ -11,6 +11,7 @@ public class ArrayListTest {
 
         assertTrue(l.isEmpty());
         assertEquals(0, l.size());
+        assertEquals(ArrayList.DEFAULT_CAPACITY, l.capacity());
     }
 
     @Test
@@ -52,5 +53,24 @@ public class ArrayListTest {
 
         assertTrue(l.add("2"));
         assertTrue(l.contains("2"));
+    }
+
+    @Test
+    void CanAddAPracticallyInfiniteNumberOfElements(){
+        var l = new ArrayList<Integer>();
+
+        int start = 10;
+        int end = 10000;
+
+        for (int i = start; i <= end; i++) {
+            assertTrue(l.add(i));
+
+            var expectedSize = 1 + i - start;
+            assertEquals(expectedSize, l.size());
+        }
+
+        for (int i = start; i <= end; i++) {
+            assertTrue(l.contains(i));
+        }
     }
 }

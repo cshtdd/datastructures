@@ -4,8 +4,15 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class ArrayList<T> implements Collection<T> {
+    static final int DEFAULT_CAPACITY = 100;
+
     private int size = 0;
-    private Object[] data = new Object[100];
+    private int capacity = DEFAULT_CAPACITY;
+    private Object[] data = new Object[capacity];
+
+    public int capacity(){
+        return capacity;
+    }
 
     @Override
     public int size() {
@@ -20,6 +27,11 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public boolean add(T t) {
         data[size++] = t;
+
+        if (size == capacity){
+            doubleCapacity();
+        }
+
         return true;
     }
 
@@ -88,5 +100,15 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    private void doubleCapacity() {
+        var newCapacity = capacity << 1;
+        var newData = new Object[newCapacity];
+        for (int i = 0; i < capacity; i++) {
+            newData[i] = data[i];
+        }
+        data = newData;
+        capacity = newCapacity;
     }
 }
