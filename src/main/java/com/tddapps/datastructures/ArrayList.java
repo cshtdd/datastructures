@@ -86,6 +86,21 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
+    public boolean containsAll(Collection<?> c) {
+        if (isEmpty()){
+            return false;
+        }
+
+        for (Object o : c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new ArrayIterator<>(data, size, () -> changeOperationsCount);
     }
@@ -112,21 +127,6 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public boolean remove(Object o) {
         return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        if (isEmpty()){
-            return false;
-        }
-
-        for (Object o : c) {
-            if (!contains(o)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     @Override
