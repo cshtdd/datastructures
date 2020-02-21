@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 public class ArrayList<T> implements Collection<T> {
     static final int DEFAULT_CAPACITY = 10;
+    private static final int NOT_FOUND = -1;
 
     private int size = 0;
     private long changeOperationsCount = 0;
@@ -75,14 +76,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean contains(Object o) {
-        for (int i = 0; i < size; i++) {
-            var e = data[i];
-            if ((o == null && e == null) ||
-                (e != null && e.equals(o))){
-                return true;
-            }
-        }
-        return false;
+        return indexOf(o) != NOT_FOUND;
     }
 
     @Override
@@ -126,7 +120,18 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        var index = indexOf(o);
+
+        if (index == NOT_FOUND){
+            return false;
+        }
+
+        for(int i = index + 1; i < size; i++) {
+            data[i - 1] = data[i];
+        }
+        size--;
+
+        return true;
     }
 
     @Override
@@ -175,5 +180,17 @@ public class ArrayList<T> implements Collection<T> {
         var newData = new Object[capacity() + delta];
         System.arraycopy(data, 0, newData, 0, size);
         data = newData;
+    }
+
+    private int indexOf(Object o){
+        for (int i = 0; i < size; i++) {
+            var e = data[i];
+            if ((o == null && e == null) ||
+                    (e != null && e.equals(o))){
+                return i;
+            }
+        }
+
+        return NOT_FOUND;
     }
 }

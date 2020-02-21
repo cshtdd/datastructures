@@ -388,5 +388,37 @@ public class ArrayListTest {
 
         assertFalse(l.remove(1));
         assertFalse(l.remove(null));
+
+        l.add(2);
+
+        assertFalse(l.remove(1));
+        assertFalse(l.remove(null));
+    }
+
+    @Test
+    void RemoveDeletesTheFirstOccurrenceOfTheSpecifiedElement(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(null);
+        l.add(2);
+        l.add(3);
+        l.add(2);
+        l.add(1);
+
+        assertEquals(6, l.size());
+        assertArrayEquals(new Integer[]{ 1, null, 2, 3, 2, 1 }, l.toArray());
+
+
+        assertTrue(l.remove(2));
+        assertArrayEquals(new Integer[]{ 1, null, 3, 2, 1 }, l.toArray());
+
+
+        assertTrue(l.remove(null));
+        assertArrayEquals(new Integer[]{ 1, 3, 2, 1 }, l.toArray());
+
+
+        assertTrue(l.remove(1));
+        assertTrue(l.remove(1));
+        assertArrayEquals(new Integer[]{ 3, 2 }, l.toArray());
     }
 }
