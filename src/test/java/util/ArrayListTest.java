@@ -71,4 +71,14 @@ public class ArrayListTest {
             });
         });
     }
+
+    @Test
+    void ContainsAllReturnsTrueWhenParametersIsEmpty(){
+        var l2 = new ArrayList<Integer>();
+
+        var l = new ArrayList<Integer>();
+        l.add(2);
+
+        assertTrue(l.containsAll(l2));
+    }
 }
