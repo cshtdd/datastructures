@@ -512,4 +512,22 @@ public class ArrayListTest {
 
         assertArrayEquals(new Integer[] { 1, 3 }, l.toArray());
     }
+
+    @Test
+    void RemoveAllReducesCapacityOnlyOnce(){
+        var l2 = new ArrayList<String>();
+        l2.add("x");
+
+        var l = new ArrayList<String>();
+        l.add("y");
+        l.add("x");
+        l.add("x");
+        l.add("x");
+        l.add("x");
+
+        assertTrue(l.removeAll(l2));
+
+        assertArrayEquals(new String[] { "y" }, l.toArray());
+        assertEquals(4, l.capacity());
+    }
 }

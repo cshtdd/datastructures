@@ -144,6 +144,8 @@ public class ArrayList<T> implements Collection<T> {
     public boolean removeAll(Collection<?> c) {
         var result = false;
 
+        var indexesToRemove = new ArrayList<Integer>(size);
+
         for (Object o : c){
             var elementRemoved = false;
             var elementRemovedOnce = false;
@@ -153,7 +155,22 @@ public class ArrayList<T> implements Collection<T> {
             } while (elementRemovedOnce);
 
             result = result || elementRemoved;
+            for (int i = 0; i < size; i++) {
+                if (containsObjectAt(o, i)){
+                    indexesToRemove.add(i);
+                }
+            }
         }
+
+//        var indices = indexesToRemove.toArray();
+////        TODO get unique elements
+////        TODO sort
+//
+//        for (int i = 0; i < indexesToRemove.size; i++) {
+//
+//        }
+//
+//        return !indexesToRemove.isEmpty();
 
         return result;
     }
@@ -212,14 +229,18 @@ public class ArrayList<T> implements Collection<T> {
 
     private int indexOf(Object o){
         for (int i = 0; i < size; i++) {
-            var e = data[i];
-            if ((o == null && e == null) ||
-                    (e != null && e.equals(o))){
+            if (containsObjectAt(o, i)){
                 return i;
             }
         }
 
         return NOT_FOUND;
+    }
+
+    private boolean containsObjectAt(Object o, int index){
+        var e = data[index];
+        return (o == null && e == null) ||
+                (e != null && e.equals(o));
     }
 
     private void trackModification() {
