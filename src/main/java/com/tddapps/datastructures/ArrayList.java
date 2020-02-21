@@ -133,8 +133,8 @@ public class ArrayList<T> implements Collection<T> {
         }
         size--;
 
-        if (available() > size){
-            increaseCapacity(-(capacity() >> 1));
+        if (isLessThanHalfFull()){
+            halveCapacity();
         }
 
         return true;
@@ -174,15 +174,24 @@ public class ArrayList<T> implements Collection<T> {
         return available() < additionalCount;
     }
 
+    private boolean isLessThanHalfFull() {
+        return available() > size;
+    }
+
     private void growCapacityToFit(int additionalCount){
-        increaseCapacity(additionalCount - available());
+        changeCapacity(additionalCount - available());
     }
 
     private void doubleCapacity() {
-        increaseCapacity(Math.max(1, capacity()));
+        changeCapacity(Math.max(1, capacity()));
     }
 
-    private void increaseCapacity(int delta){
+    private void halveCapacity(){
+        int half = capacity() >> 1;
+        changeCapacity(-half);
+    }
+
+    private void changeCapacity(int delta){
         var newData = new Object[capacity() + delta];
         System.arraycopy(data, 0, newData, 0, size);
         data = newData;
