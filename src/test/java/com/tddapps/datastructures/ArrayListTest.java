@@ -105,7 +105,7 @@ public class ArrayListTest {
 
         assertTrue(l.add(1));
         assertEquals(1, l.size());
-        assertEquals(2, l.capacity());
+        assertEquals(1, l.capacity());
 
         assertTrue(l.add(1));
         assertEquals(2, l.size());
