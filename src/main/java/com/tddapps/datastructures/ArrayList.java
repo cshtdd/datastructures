@@ -14,6 +14,10 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     public ArrayList(int initialCapacity){
+        if (initialCapacity < 0){
+            throw new IllegalArgumentException("initialCapacity cannot be negative");
+        }
+
         data = new Object[initialCapacity];
     }
 

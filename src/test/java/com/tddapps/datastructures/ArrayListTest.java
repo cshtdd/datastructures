@@ -27,6 +27,13 @@ public class ArrayListTest {
         assertEquals(1024, l.capacity());
     }
 
+    @Test()
+    void CapacityCannotBeNegative(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            new ArrayList<>(-1);
+        });
+    }
+
     @Test
     void AddingElementsChangesSize(){
         var l = new ArrayList<String>();
