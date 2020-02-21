@@ -43,7 +43,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean add(T t) {
-        changeOperationsCount++;
+        trackModification();
 
         if (isFull()){
             doubleCapacity();
@@ -56,7 +56,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        changeOperationsCount++;
+        trackModification();
         int additionsCount = c.size();
 
         if (additionsCount == 0){
@@ -126,7 +126,7 @@ public class ArrayList<T> implements Collection<T> {
             return false;
         }
 
-        changeOperationsCount++;
+        trackModification();
 
         for(int i = index + 1; i < size; i++) {
             data[i - 1] = data[i];
@@ -148,7 +148,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public void clear() {
-        changeOperationsCount++;
+        trackModification();
         size = 0;
     }
 
@@ -194,5 +194,9 @@ public class ArrayList<T> implements Collection<T> {
         }
 
         return NOT_FOUND;
+    }
+
+    private void trackModification() {
+        changeOperationsCount++;
     }
 }
