@@ -186,6 +186,13 @@ public class ArrayListTest {
     }
 
     @Test
+    void toArrayReturnsAnEmptyArrayWhenEmpty(){
+        var l = new ArrayList<Integer>();
+
+        assertArrayEquals(new Integer[0], l.toArray());
+    }
+
+    @Test
     void toArrayCopiesElementsToTheSuppliedArrayWhenThereIsEnoughCapacity(){
         var l = new ArrayList<Integer>();
         l.add(1);
@@ -202,6 +209,22 @@ public class ArrayListTest {
 
         assertArrayEquals(new Integer[]{ 1, 2, 3, 4, null, null }, buffer);
         assertArrayEquals(new Integer[]{ 1, 2, 3, 4, null, null }, result);
+    }
+
+    @Test
+    void toArrayDoesNotCopyWhenEmpty(){
+        var l = new ArrayList<Integer>();
+
+
+        var buffer = new Integer[6];
+        assertArrayEquals(new Integer[]{ null, null, null, null, null, null }, buffer);
+
+
+        var result = l.toArray(buffer);
+
+
+        assertArrayEquals(new Integer[]{ null, null, null, null, null, null }, buffer);
+        assertArrayEquals(new Integer[]{ null, null, null, null, null, null }, result);
     }
 
     @Test
