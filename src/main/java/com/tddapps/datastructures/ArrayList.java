@@ -7,7 +7,6 @@ public class ArrayList<T> implements Collection<T> {
     static final int DEFAULT_CAPACITY = 10;
 
     private int size = 0;
-    private int capacity;
     private Object[] data;
 
     public ArrayList(){
@@ -15,12 +14,11 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     public ArrayList(int initialCapacity){
-        capacity = initialCapacity;
-        data = new Object[capacity];
+        data = new Object[initialCapacity];
     }
 
     public int capacity(){
-        return capacity;
+        return data.length;
     }
 
     @Override
@@ -35,11 +33,11 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean add(T t) {
-        data[size++] = t;
-
-        if (size == capacity){
+        if (size == capacity()){
             doubleCapacity();
         }
+
+        data[size++] = t;
 
         return true;
     }
@@ -112,12 +110,12 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     private void doubleCapacity() {
-        var newCapacity = capacity << 1;
-        var newData = new Object[newCapacity];
-        for (int i = 0; i < capacity; i++) {
+        int currentCapacity = capacity();
+        int updateCapacity = Math.max(2, currentCapacity << 1);
+        var newData = new Object[updateCapacity];
+        for (int i = 0; i < currentCapacity; i++) {
             newData[i] = data[i];
         }
         data = newData;
-        capacity = newCapacity;
     }
 }

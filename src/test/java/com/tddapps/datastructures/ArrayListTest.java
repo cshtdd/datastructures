@@ -86,4 +86,29 @@ public class ArrayListTest {
             assertTrue(l.contains(i));
         }
     }
+
+    @Test
+    void CapacityIsDoubled() {
+        var l = new ArrayList<Integer>(0);
+
+        assertEquals(0, l.size());
+        assertEquals(0, l.capacity());
+
+        assertTrue(l.add(1));
+        assertEquals(1, l.size());
+        assertEquals(2, l.capacity());
+
+        assertTrue(l.add(1));
+        assertEquals(2, l.size());
+        assertEquals(2, l.capacity());
+
+        assertTrue(l.add(1));
+        assertEquals(3, l.size());
+        assertEquals(4, l.capacity());
+
+        assertTrue(l.add(1));
+        assertTrue(l.add(1));
+        assertEquals(5, l.size());
+        assertEquals(8, l.capacity());
+    }
 }
