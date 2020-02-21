@@ -530,6 +530,6 @@ public class ArrayListTest {
         assertTrue(l.removeAll(l2));
 
         assertArrayEquals(new String[] { "y" }, l.toArray());
-        assertEquals(1, l.capacity());
+        assertEquals(4, l.capacity());
     }
 }

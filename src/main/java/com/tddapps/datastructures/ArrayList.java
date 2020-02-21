@@ -158,30 +158,23 @@ public class ArrayList<T> implements Collection<T> {
                 .sorted()
                 .toArray(Integer[]::new);
 
-        var newData = new Object[size - indexes.length];
-        int bufferIndex = 0;
-        for (int i = 0; i < size; i++) {
-            if (!binarySearch(indexes, i)){
-                newData[bufferIndex] = data[i];
-                bufferIndex++;
-            }
+        for (int i = indexes.length - 1; i >= 0; i--) {
+            var index = indexes[i];
+            shiftLeftAt(index);
+            size--;
         }
 
-        data = newData;
-        size = newData.length;
+        if (isLessThanHalfFull()){
+            halveCapacity();
+        }
 
         return indexes.length > 0;
     }
 
-    private boolean binarySearch(Integer[] arr, Integer e){
-//        TODO: faster implementation
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == e){
-                return true;
-            }
+    private void shiftLeftAt(int index){
+        for (int i = index + 1; i < size; i++){
+            data[i - 1] = data[i];
         }
-
-        return false;
     }
 
     @Override
