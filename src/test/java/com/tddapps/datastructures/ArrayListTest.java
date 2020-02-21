@@ -209,4 +209,16 @@ public class ArrayListTest {
             l.toArray(new Long[20]);
         });
     }
+
+    @Test
+    void ClearsTheList(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+
+        l.clear();
+
+        assertEquals(0, l.size());
+        assertTrue(l.isEmpty());
+    }
 }

@@ -109,7 +109,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public void clear() {
-
+        size = 0;
     }
 
     @Override
