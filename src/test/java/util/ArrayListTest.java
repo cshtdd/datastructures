@@ -3,6 +3,7 @@ package util;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,5 +57,18 @@ public class ArrayListTest {
         l.add("1");
 
         l.forEach(i -> l.add("1"));
+    }
+
+    @Test
+    void CannotAddAnEmptyListDuringAnIteration(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i-> {
+                l.addAll(new ArrayList<>());
+            });
+        });
     }
 }
