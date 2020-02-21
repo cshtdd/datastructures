@@ -26,6 +26,10 @@ public class ArrayList<T> implements Collection<T> {
         return data.length;
     }
 
+    private int available() {
+        return capacity() - size;
+    }
+
     @Override
     public int size() {
         return size;
@@ -146,23 +150,19 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     private boolean isFull(int additionalCount){
-        int available = capacity() - size;
-        return available < additionalCount;
+        return available() < additionalCount;
     }
 
     private void growCapacityToFit(int additionalCount){
-        int available = capacity() - size;
-        var updatedCapacity = capacity() + (additionalCount - available);
-        increaseCapacity(updatedCapacity);
+        increaseCapacity(additionalCount - available());
     }
 
     private void doubleCapacity() {
-        int updatedCapacity = Math.max(2, capacity() << 1);
-        increaseCapacity(updatedCapacity);
+        increaseCapacity(Math.max(1, capacity()));
     }
 
-    private void increaseCapacity(int updatedCapacity){
-        var newData = new Object[updatedCapacity];
+    private void increaseCapacity(int delta){
+        var newData = new Object[capacity() + delta];
         System.arraycopy(data, 0, newData, 0, size);
         data = newData;
     }
