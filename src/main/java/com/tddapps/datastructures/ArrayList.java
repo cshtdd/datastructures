@@ -120,13 +120,13 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean remove(Object o) {
-        changeOperationsCount++;
-
         var index = indexOf(o);
 
         if (index == NOT_FOUND){
             return false;
         }
+
+        changeOperationsCount++;
 
         for(int i = index + 1; i < size; i++) {
             data[i - 1] = data[i];
