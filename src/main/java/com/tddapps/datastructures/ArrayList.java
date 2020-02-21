@@ -40,7 +40,7 @@ public class ArrayList<T> implements Collection<T> {
     public boolean add(T t) {
         changeOperationsCount++;
 
-        if (size == capacity()){
+        if (isFull()){
             doubleCapacity();
         }
 
@@ -58,16 +58,13 @@ public class ArrayList<T> implements Collection<T> {
             return false;
         }
 
-        int availableCapacity = capacity() - size;
-        if (availableCapacity < additionsCount){
-            var capacityIncrease = additionsCount - availableCapacity;
-            var updatedCapacity = capacity() + capacityIncrease;
-            increaseCapacity(updatedCapacity);
+        if (isFull(additionsCount)){
+            growCapacityToFit(additionsCount);
         }
 
-        c.forEach(i -> {
+        for (T i : c) {
             data[size++] = i;
-        });
+        }
 
         return true;
     }
@@ -142,6 +139,21 @@ public class ArrayList<T> implements Collection<T> {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    private boolean isFull() {
+        return isFull(1);
+    }
+
+    private boolean isFull(int additionalCount){
+        int available = capacity() - size;
+        return available < additionalCount;
+    }
+
+    private void growCapacityToFit(int additionalCount){
+        int available = capacity() - size;
+        var updatedCapacity = capacity() + (additionalCount - available);
+        increaseCapacity(updatedCapacity);
     }
 
     private void doubleCapacity() {
