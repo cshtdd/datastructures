@@ -116,9 +116,7 @@ public class ArrayList<T> implements Collection<T> {
         int currentCapacity = capacity();
         int updateCapacity = Math.max(2, currentCapacity << 1);
         var newData = new Object[updateCapacity];
-        for (int i = 0; i < currentCapacity; i++) {
-            newData[i] = data[i];
-        }
+        System.arraycopy(data, 0, newData, 0, currentCapacity);
         data = newData;
     }
 }
