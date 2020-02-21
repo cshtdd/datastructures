@@ -163,6 +163,20 @@ public class ArrayListTest {
     }
 
     @Test
+    void CannotAddAllWhileIterating(){
+        var l2 = new ArrayList<>();
+        l2.add("1");
+
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.addAll(l2));
+        });
+    }
+
+    @Test
     void CannotClearWhileIterating(){
         var l = new ArrayList<>();
         l.add("1");
