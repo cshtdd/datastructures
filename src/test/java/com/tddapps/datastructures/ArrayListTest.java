@@ -2,6 +2,8 @@ package com.tddapps.datastructures;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ConcurrentModificationException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayListTest {
@@ -147,6 +149,28 @@ public class ArrayListTest {
         assertEquals("2", elements[1]);
         assertEquals("3", elements[2]);
         assertEquals("4", elements[3]);
+    }
+
+    @Test
+    void CannotAddWhileIterating(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.add("1"));
+        });
+    }
+
+    @Test
+    void CannotClearWhileIterating(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.clear());
+        });
     }
 
     @Test

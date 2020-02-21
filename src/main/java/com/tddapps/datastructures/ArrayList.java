@@ -7,6 +7,7 @@ public class ArrayList<T> implements Collection<T> {
     static final int DEFAULT_CAPACITY = 10;
 
     private int size = 0;
+    private long changeOperationsCount = 0;
     private Object[] data;
 
     public ArrayList(){
@@ -37,6 +38,8 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean add(T t) {
+        changeOperationsCount++;
+
         if (size == capacity()){
             doubleCapacity();
         }
@@ -60,7 +63,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator<>(data, size);
+        return new ArrayIterator<>(data, size, () -> changeOperationsCount);
     }
 
     @Override
@@ -109,6 +112,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public void clear() {
+        changeOperationsCount++;
         size = 0;
     }
 
