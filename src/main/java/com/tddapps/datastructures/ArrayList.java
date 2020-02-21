@@ -152,6 +152,12 @@ public class ArrayList<T> implements Collection<T> {
             }
         }
 
+        if (indexesToRemove.isEmpty()){
+            return false;
+        }
+
+        trackModification();
+
         var indexes = indexesToRemove
                 .stream()
                 .distinct()
@@ -168,7 +174,7 @@ public class ArrayList<T> implements Collection<T> {
             halveCapacity();
         }
 
-        return indexes.length > 0;
+        return true;
     }
 
     private void shiftLeftAt(int index){
