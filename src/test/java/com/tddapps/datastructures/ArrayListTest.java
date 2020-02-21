@@ -177,6 +177,17 @@ public class ArrayListTest {
     }
 
     @Test
+    void CanAddAllAnEmptyListWhileIterating(){
+        var l2 = new ArrayList<>();
+
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        l.forEach(i -> l.addAll(l2));
+    }
+
+    @Test
     void CannotClearWhileIterating(){
         var l = new ArrayList<>();
         l.add("1");
