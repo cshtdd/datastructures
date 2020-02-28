@@ -47,18 +47,14 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size){
-            throw new IndexOutOfBoundsException(index);
-        }
+        validateIndexIsWithinBounds(index);
 
         return (T)data[index];
     }
 
     @Override
     public T set(int index, T element) {
-        if (index < 0 || index >= size){
-            throw new IndexOutOfBoundsException(index);
-        }
+        validateIndexIsWithinBounds(index);
 
         var result = data[index];
         data[index] = element;
@@ -401,5 +397,11 @@ public class ArrayList<T> implements List<T> {
 
     private void trackModification() {
         changeOperationsCount++;
+    }
+
+    private void validateIndexIsWithinBounds(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(index);
+        }
     }
 }
