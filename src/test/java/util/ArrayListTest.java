@@ -169,4 +169,30 @@ public class ArrayListTest {
         assertNotEquals(l2, l3);
         assertNotEquals(l2.hashCode(), l3.hashCode());
     }
+
+    @Test
+    void IsNotThreadSafe() throws InterruptedException {
+        var l = new ArrayList<Integer>();
+
+        var l1 = new ArrayList<Integer>();
+        for (int i = 0; i < 100000; i++) {
+            l1.add(i);
+        }
+
+        var threads = new Thread[]{
+                new Thread(() -> assertTrue(l.addAll(l1))),
+                new Thread(() -> assertTrue(l.addAll(l1))),
+                new Thread(() -> assertTrue(l.addAll(l1))),
+        };
+
+        for (var t : threads){
+            t.start();
+        }
+
+        for (var t : threads){
+            t.join(1000);
+        }
+
+        assertEquals(threads.length * l1.size(), l.size());
+    }
 }
