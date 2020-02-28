@@ -694,18 +694,18 @@ public class ArrayListTest {
 
     @Test
     void IsNotThreadSafeByDefault() throws InterruptedException {
-        var l1 = new java.util.ArrayList<Integer>();
+        var l1 = new ArrayList<Integer>();
         for (int i = 0; i < 100000; i++) {
             l1.add(i);
         }
         int threadCount = 3;
         int expectedSize = threadCount * l1.size();
 
-        var l = new java.util.ArrayList<Integer>();
+        var l = new ArrayList<Integer>();
         com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, l, threadCount);
         assertNotEquals(expectedSize, l.size());
 
-        var threadSafeList = Collections.synchronizedCollection(new java.util.ArrayList<Integer>());
+        var threadSafeList = Collections.synchronizedCollection(new ArrayList<Integer>());
         com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, threadSafeList, threadCount);
         assertEquals(expectedSize, threadSafeList.size());
     }
