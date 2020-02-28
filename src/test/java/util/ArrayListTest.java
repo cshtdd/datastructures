@@ -138,13 +138,13 @@ public class ArrayListTest {
     }
 
     @Test
-    void ListWithTheSameElementsInTheSameOrderAreEqual(){
+    void ListWithTheSameElementsInTheSameOrderAreEqualEvenWhenCapacitiesDiffer(){
         int x = 2;
         int y = 3;
         int z = 4;
 
-        var l1 = new ArrayList<>();
-        var l2 = new ArrayList<>();
+        var l1 = new ArrayList<>(100);
+        var l2 = new ArrayList<>(1000);
         var l3 = new ArrayList<>();
         assertEquals(l1, l2);
         assertEquals(l2, l3);
