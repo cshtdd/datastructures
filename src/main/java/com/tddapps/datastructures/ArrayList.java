@@ -199,6 +199,8 @@ public class ArrayList<T> implements Collection<T> {
             return false;
         }
 
+        trackModification();
+
         for (int i = 0; i < indexes.length - 1; i++) {
             var currIdx = indexes[i];
             var nextIdx = indexes[i + 1];

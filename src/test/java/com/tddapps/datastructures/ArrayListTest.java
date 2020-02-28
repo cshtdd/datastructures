@@ -224,12 +224,39 @@ public class ArrayListTest {
     }
 
     @Test
-    void CanRemoveAllAnEmptyList(){
+    void CanRemoveAllAnEmptyListWhileIterating(){
         var l = new ArrayList<>();
         l.add("1");
         l.add("2");
 
         l.forEach(i -> l.removeAll(new ArrayList<>()));
+    }
+
+    @Test
+    void CannotRetainAllWhileIterating(){
+        var l2 = new ArrayList<>();
+        l2.add("1");
+
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            l.forEach(i -> l.retainAll(l2));
+        });
+    }
+
+    @Test
+    void CanRetainAllElementsWhileIterating(){
+        var l2 = new ArrayList<>();
+        l2.add("1");
+        l2.add("2");
+
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        l.forEach(i -> l.retainAll(l2));
     }
 
     @Test
