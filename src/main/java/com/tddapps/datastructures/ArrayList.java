@@ -76,7 +76,13 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
+        if (isFull()) {
+            doubleCapacity();
+        }
 
+        shiftRightAt(0);
+        data[index] = element;
+        size++;
     }
 
     @Override
@@ -392,6 +398,16 @@ public class ArrayList<T> implements List<T> {
     private void shiftLeftAt(int index, int count) {
         for (int i = index + count; i < size; i++) {
             data[i - count] = data[i];
+        }
+    }
+
+    private void shiftRightAt(int index){
+        shiftRightAt(index, 1);
+    }
+
+    private void shiftRightAt(int index, int count){
+        for (int i = size - 1; i >= index; i--) {
+            data[i + count] = data[i];
         }
     }
 

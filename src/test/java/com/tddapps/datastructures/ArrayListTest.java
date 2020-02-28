@@ -795,4 +795,13 @@ public class ArrayListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> l.set(3, null));
     }
 
+    @Test
+    void CanAddElementsAtAPosition(){
+        var l = new ArrayList<String>();
+        l.add(0, "a");
+        l.add(0, "b");
+        l.add(0, "c");
+
+        assertArrayEquals(new String[]{"c", "b", "a"}, l.toArray());
+    }
 }
