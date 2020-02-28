@@ -213,6 +213,10 @@ public class ArrayList<T> implements Collection<T> {
 
         size = indexes.length;
 
+        if (isLessThanHalfFull()){
+            halveCapacity();
+        }
+
         return true;
     }
 
