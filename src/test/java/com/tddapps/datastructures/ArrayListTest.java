@@ -2,6 +2,8 @@ package com.tddapps.datastructures;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -691,28 +693,35 @@ public class ArrayListTest {
     }
 
     @Test
-    void AddAllIsThreadSafe() throws InterruptedException {
-        var l = new ArrayList<Integer>();
-
-        var l1 = new ArrayList<Integer>();
+    void IsNotThreadSafeByDefault() throws InterruptedException {
+        var l1 = new java.util.ArrayList<Integer>();
         for (int i = 0; i < 100000; i++) {
             l1.add(i);
         }
+        int threadCount = 3;
+        int expectedSize = threadCount * l1.size();
 
-        var threads = new Thread[]{
-                new Thread(() -> l.addAll(l1)),
-                new Thread(() -> l.addAll(l1)),
-                new Thread(() -> l.addAll(l1))
-        };
+        var l = new java.util.ArrayList<Integer>();
+        com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, l, threadCount);
+        assertNotEquals(expectedSize, l.size());
+
+        var threadSafeList = Collections.synchronizedCollection(new java.util.ArrayList<Integer>());
+        com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, threadSafeList, threadCount);
+        assertEquals(expectedSize, threadSafeList.size());
+    }
+
+    public static <T> void addAllMultiThreaded(Collection<T> src, Collection<T> dest, int threadCount) throws InterruptedException {
+        var threads = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new Thread(() -> assertTrue(dest.addAll(src)));
+        }
 
         for (var t : threads){
             t.start();
         }
 
         for (var t : threads){
-            t.join(1000);
+            t.join(10000);
         }
-
-        assertEquals(threads.length * l1.size(), l.size());
     }
 }

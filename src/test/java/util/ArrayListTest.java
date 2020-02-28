@@ -3,6 +3,8 @@ package util;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -171,28 +173,20 @@ public class ArrayListTest {
     }
 
     @Test
-    void IsNotThreadSafe() throws InterruptedException {
-        var l = new ArrayList<Integer>();
-
+    void IsNotThreadSafeByDefault() throws InterruptedException {
         var l1 = new ArrayList<Integer>();
         for (int i = 0; i < 100000; i++) {
             l1.add(i);
         }
+        int threadCount = 3;
+        int expectedSize = threadCount * l1.size();
 
-        var threads = new Thread[]{
-                new Thread(() -> assertTrue(l.addAll(l1))),
-                new Thread(() -> assertTrue(l.addAll(l1))),
-                new Thread(() -> assertTrue(l.addAll(l1))),
-        };
+        var l = new ArrayList<Integer>();
+        com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, l, threadCount);
+        assertNotEquals(expectedSize, l.size());
 
-        for (var t : threads){
-            t.start();
-        }
-
-        for (var t : threads){
-            t.join(1000);
-        }
-
-        assertEquals(threads.length * l1.size(), l.size());
+        var threadSafeList = Collections.synchronizedCollection(new ArrayList<Integer>());
+        com.tddapps.datastructures.ArrayListTest.addAllMultiThreaded(l1, threadSafeList, threadCount);
+        assertEquals(expectedSize, threadSafeList.size());
     }
 }
