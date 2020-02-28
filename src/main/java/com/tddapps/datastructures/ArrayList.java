@@ -203,14 +203,12 @@ public class ArrayList<T> implements Collection<T> {
             var currIdx = indexes[i];
             var nextIdx = indexes[i + 1];
             var diff = nextIdx - currIdx;
-            if (diff <= 1){
-                continue;
+            if (diff > 1){
+                var shiftStartIndex = currIdx + 1;
+                var shiftSize = diff - 1;
+                shiftLeftAt(shiftStartIndex, shiftSize);
+                decrementBy(indexes, shiftSize);
             }
-
-            var shiftStartIndex = currIdx + 1;
-            var shiftSize = diff - 1;
-            shiftLeftAt(shiftStartIndex, shiftSize);
-            decrementBy(indexes, shiftSize);
         }
 
         size = indexes.length;
