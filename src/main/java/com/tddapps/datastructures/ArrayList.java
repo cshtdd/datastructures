@@ -76,6 +76,10 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
         if (isFull()) {
             doubleCapacity();
         }

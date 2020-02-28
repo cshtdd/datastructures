@@ -796,12 +796,20 @@ public class ArrayListTest {
     }
 
     @Test
-    void CanAddElementsAtAPosition(){
+    void AddsElementAtAPosition(){
         var l = new ArrayList<String>();
         l.add(0, "a");
         l.add(0, "b");
         l.add(0, "c");
 
         assertArrayEquals(new String[]{"c", "b", "a"}, l.toArray());
+    }
+
+    @Test
+    void AddThrowsIndexOutOfBoundsWhenPositionIsInvalid(){
+        var l = new ArrayList<String>();
+
+        assertThrows(IndexOutOfBoundsException.class, () -> l.add(-1, "4"));
+        assertThrows(IndexOutOfBoundsException.class, () -> l.add(1, "4"));
     }
 }
