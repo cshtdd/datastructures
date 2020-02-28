@@ -25,7 +25,7 @@ public class ArrayList<T> implements Collection<T> {
         data = new Object[initialCapacity];
     }
 
-    public int capacity() {
+    int capacity() {
         return data.length;
     }
 
