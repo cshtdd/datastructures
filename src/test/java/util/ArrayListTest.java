@@ -54,11 +54,16 @@ public class ArrayListTest {
     }
 
     @Test
-    void DoesNotThrowAfterIteratingAndModifyingACollectionOfOneElement(){
-        var l = new com.tddapps.datastructures.ArrayList<>();
+    void DoesNotThrowWhenSettingAnElementDuringAnIteration(){
+
+    }
+
+    @Test
+    void ThrowsAfterIteratingAndModifyingACollectionOfOneElement(){
+        var l = new ArrayList<>();
         l.add("1");
 
-        l.forEach(i -> l.add("1"));
+        assertThrows(ConcurrentModificationException.class, () -> l.forEach(i -> l.add("1")));
     }
 
     @Test
