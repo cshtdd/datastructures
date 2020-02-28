@@ -56,7 +56,13 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        return null;
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        var result = data[index];
+        data[index] = element;
+        return (T)result;
     }
 
     @Override

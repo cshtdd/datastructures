@@ -758,4 +758,41 @@ public class ArrayListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> l.get(3));
     }
 
+    @Test
+    void SetChangesTheElementAtTheSpecifiedPosition(){
+        var l = new ArrayList<>(){{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        assertEquals(1, l.set(0, 10));
+        assertEquals(10, l.get(0));
+    }
+
+    @Test
+    void SetChangesTheElementAtTheSpecifiedPositionEvenWhenThePreviousValueWasNull(){
+        var l = new ArrayList<>(){{
+            add(1);
+            add(null);
+            add(3);
+        }};
+
+        assertNull(l.set(1, 20));
+        assertEquals(20, l.get(1));
+    }
+
+    @Test
+    void SetThrowsIndexOutOfBoundsExceptionWhenPositionIsInvalid(){
+        var l = new ArrayList<Integer>();
+        assertThrows(IndexOutOfBoundsException.class, () -> l.set(0, null));
+
+        l.add(1);
+        l.add(2);
+        l.add(3);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> l.set(-1, null));
+        assertThrows(IndexOutOfBoundsException.class, () -> l.set(3, null));
+    }
+
 }
