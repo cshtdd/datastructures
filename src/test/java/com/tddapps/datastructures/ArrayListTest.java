@@ -456,59 +456,59 @@ public class ArrayListTest {
 
     @Test
     void RemoveReturnsFalseWhenElementNotFound(){
-        var l = new ArrayList<Integer>();
+        var l = new ArrayList<String>();
 
-        assertFalse(l.remove(1));
+        assertFalse(l.remove("1"));
         assertFalse(l.remove(null));
 
-        l.add(2);
+        l.add("2");
 
-        assertFalse(l.remove(1));
+        assertFalse(l.remove("1"));
         assertFalse(l.remove(null));
     }
 
     @Test
     void RemoveDeletesTheFirstOccurrenceOfTheSpecifiedElement(){
-        var l = new ArrayList<Integer>();
-        l.add(1);
+        var l = new ArrayList<String>();
+        l.add("1");
         l.add(null);
-        l.add(2);
-        l.add(3);
-        l.add(2);
-        l.add(1);
+        l.add("2");
+        l.add("3");
+        l.add("2");
+        l.add("1");
 
         assertEquals(6, l.size());
-        assertArrayEquals(new Integer[]{ 1, null, 2, 3, 2, 1 }, l.toArray());
+        assertArrayEquals(new String[]{ "1", null, "2", "3", "2", "1" }, l.toArray());
 
 
-        assertTrue(l.remove(2));
-        assertArrayEquals(new Integer[]{ 1, null, 3, 2, 1 }, l.toArray());
+        assertTrue(l.remove("2"));
+        assertArrayEquals(new String[]{ "1", null, "3", "2", "1" }, l.toArray());
 
 
         assertTrue(l.remove(null));
-        assertArrayEquals(new Integer[]{ 1, 3, 2, 1 }, l.toArray());
+        assertArrayEquals(new String[]{ "1", "3", "2", "1" }, l.toArray());
 
 
-        assertTrue(l.remove(1));
-        assertTrue(l.remove(1));
-        assertArrayEquals(new Integer[]{ 3, 2 }, l.toArray());
+        assertTrue(l.remove("1"));
+        assertTrue(l.remove("1"));
+        assertArrayEquals(new String[]{ "3", "2" }, l.toArray());
     }
 
     @Test
     void RemoveReducesCapacityInHalfWhenTheListIsLessThanHalfFull(){
-        var l = new ArrayList<Integer>(4);
-        l.add(1);
-        l.add(2);
-        l.add(3);
+        var l = new ArrayList<String>(4);
+        l.add("1");
+        l.add("2");
+        l.add("3");
 
         assertEquals(3, l.size());
         assertEquals(4, l.capacity());
 
-        assertTrue(l.remove(1));
+        assertTrue(l.remove("1"));
         assertEquals(2, l.size());
         assertEquals(4, l.capacity());
 
-        assertTrue(l.remove(3));
+        assertTrue(l.remove("3"));
         assertEquals(1, l.size());
         assertEquals(2, l.capacity());
     }

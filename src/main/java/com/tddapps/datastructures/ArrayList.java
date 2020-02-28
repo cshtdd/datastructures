@@ -3,9 +3,11 @@ package com.tddapps.datastructures;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
-public class ArrayList<T> implements Collection<T> {
+public class ArrayList<T> implements List<T> {
     static final int DEFAULT_CAPACITY = 10;
     private static final int NOT_FOUND = -1;
 
@@ -44,6 +46,16 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
+    public T get(int index) {
+        return null;
+    }
+
+    @Override
+    public T set(int index, T element) {
+        return null;
+    }
+
+    @Override
     public boolean add(T t) {
         trackModification();
 
@@ -54,6 +66,11 @@ public class ArrayList<T> implements Collection<T> {
         data[size++] = t;
 
         return true;
+    }
+
+    @Override
+    public void add(int index, T element) {
+
     }
 
     @Override
@@ -77,8 +94,29 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
     public boolean contains(Object o) {
         return indexOf(o) != NOT_FOUND;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        for (int i = 0; i < size; i++) {
+            if (containsObjectAt(o, i)) {
+                return i;
+            }
+        }
+
+        return NOT_FOUND;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
     }
 
     @Override
@@ -102,6 +140,16 @@ public class ArrayList<T> implements Collection<T> {
     }
 
     @Override
+    public ListIterator<T> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<T> listIterator(int index) {
+        return null;
+    }
+
+    @Override
     public Object[] toArray() {
         var result = new Object[size];
         System.arraycopy(data, 0, result, 0, size);
@@ -118,6 +166,11 @@ public class ArrayList<T> implements Collection<T> {
 
         System.arraycopy(data, 0, result, 0, size);
         return result;
+    }
+
+    @Override
+    public List<T> subList(int fromIndex, int toIndex) {
+        return null;
     }
 
     @Override
@@ -138,6 +191,11 @@ public class ArrayList<T> implements Collection<T> {
         }
 
         return true;
+    }
+
+    @Override
+    public T remove(int index) {
+        return null;
     }
 
     @Override
@@ -307,16 +365,6 @@ public class ArrayList<T> implements Collection<T> {
         var newData = new Object[capacity() + delta];
         System.arraycopy(data, 0, newData, 0, size);
         data = newData;
-    }
-
-    private int indexOf(Object o) {
-        for (int i = 0; i < size; i++) {
-            if (containsObjectAt(o, i)) {
-                return i;
-            }
-        }
-
-        return NOT_FOUND;
     }
 
     private boolean containsObjectAt(Object o, int index) {
