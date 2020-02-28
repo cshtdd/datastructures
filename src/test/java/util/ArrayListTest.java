@@ -55,7 +55,10 @@ public class ArrayListTest {
 
     @Test
     void DoesNotThrowWhenSettingAnElementDuringAnIteration(){
+        var l = new ArrayList<>();
+        l.add("1");
 
+        l.forEach(i -> l.set(0, "1"));
     }
 
     @Test
