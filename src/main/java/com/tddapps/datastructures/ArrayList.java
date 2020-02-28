@@ -179,7 +179,43 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        var indexesToPreserve = new ArrayList<Integer>(size);
+
+        for (Object o : c){
+            for (int i = 0; i < size; i++) {
+                if (containsObjectAt(o, i)){
+                    indexesToPreserve.add(i);
+                }
+            }
+        }
+
+        var indexes = indexesToPreserve
+                .stream()
+                .distinct()
+                .sorted()
+                .toArray(Integer[]::new);
+
+        if (indexes.length == size){
+            return false;
+        }
+
+        for (int i = 0; i < indexes.length - 1; i++) {
+            var currIdx = indexes[i];
+            var nextIdx = indexes[i + 1];
+            var diff = nextIdx - currIdx;
+            if (diff <= 1){
+                continue;
+            }
+
+            var shiftStartIndex = currIdx + 1;
+            var shiftSize = diff - 1;
+            shiftLeftAt(shiftStartIndex, shiftSize);
+            decrementBy(indexes, shiftSize);
+        }
+
+        size = indexes.length;
+
+        return true;
     }
 
     @Override
@@ -245,9 +281,19 @@ public class ArrayList<T> implements Collection<T> {
                 (e != null && e.equals(o));
     }
 
+    private void decrementBy(Integer[] arr, int value){
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] -= value;
+        }
+    }
+
     private void shiftLeftAt(int index){
-        for (int i = index + 1; i < size; i++){
-            data[i - 1] = data[i];
+        shiftLeftAt(index, 1);
+    }
+
+    private void shiftLeftAt(int index, int count){
+        for (int i = index + count; i < size; i++){
+            data[i - count] = data[i];
         }
     }
 

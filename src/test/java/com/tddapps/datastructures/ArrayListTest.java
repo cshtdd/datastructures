@@ -555,4 +555,61 @@ public class ArrayListTest {
         assertArrayEquals(new String[] { "y" }, l.toArray());
         assertEquals(4, l.capacity());
     }
+
+    @Test
+    void RetainAllReturnsFalseWhenEmpty(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(2);
+
+        var l = new ArrayList<Integer>();
+        assertFalse(l.retainAll(l2));
+    }
+
+    @Test
+    void RetainAllClearsTheListWhenNoElementsProvided(){
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+
+        assertTrue(l.retainAll(new ArrayList<Integer>()));
+        assertEquals(0, l.size());
+    }
+
+    @Test
+    void RetainAllReturnsFalseWhenNoElementsRemoved(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(2);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(2);
+        l.add(2);
+
+        assertFalse(l.retainAll(l2));
+        assertEquals(4, l.size());
+    }
+
+    @Test
+    void RetainAllRemovesAllNonMatchingElements(){
+        var l2 = new ArrayList<Integer>();
+        l2.add(1);
+        l2.add(1);
+        l2.add(null);
+
+        var l = new ArrayList<Integer>();
+        l.add(1);
+        l.add(2);
+        l.add(2);
+        l.add(null);
+        l.add(1);
+        l.add(null);
+
+        assertTrue(l.retainAll(l2));
+
+        assertArrayEquals(new Integer[] { 1, null, 1, null }, l.toArray());
+    }
+
 }
