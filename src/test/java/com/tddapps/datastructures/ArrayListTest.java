@@ -747,13 +747,15 @@ public class ArrayListTest {
 
     @Test
     void GetThrowsIndexOutOfBoundsExceptionWhenPositionIsInvalid(){
-        var l = new ArrayList<>(){{
-            add(1);
-            add(2);
-            add(3);
-        }};
+        var l = new ArrayList<Integer>();
+        assertThrows(IndexOutOfBoundsException.class, () -> l.get(0));
+
+        l.add(1);
+        l.add(2);
+        l.add(3);
 
         assertThrows(IndexOutOfBoundsException.class, () -> l.get(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> l.get(3));
     }
+
 }
