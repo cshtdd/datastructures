@@ -24,6 +24,7 @@ class ArrayIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
+        validateState();
         return index < size;
     }
 

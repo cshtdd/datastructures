@@ -165,6 +165,14 @@ public class ArrayListTest {
     }
 
     @Test
+    void ThrowsAfterIteratingAndModifyingACollectionOfOneElement(){
+        var l = new ArrayList<>();
+        l.add("1");
+
+        assertThrows(ConcurrentModificationException.class, () -> l.forEach(i -> l.add("1")));
+    }
+
+    @Test
     void CannotRemoveWhileIterating(){
         var l = new ArrayList<>();
         l.add("1");
