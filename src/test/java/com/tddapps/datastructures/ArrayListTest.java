@@ -724,4 +724,28 @@ public class ArrayListTest {
             t.join(10000);
         }
     }
+
+    @Test
+    void GetReadsTheElementAtTheSpecifiedPosition(){
+        var l = new ArrayList<>(){{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        assertEquals(1, l.get(0));
+        assertEquals(2, l.get(1));
+    }
+
+    @Test
+    void GetThrowsIndexOutOfBoundsExceptionWhenPositionIsInvalid(){
+        var l = new ArrayList<>(){{
+            add(1);
+            add(2);
+            add(3);
+        }};
+
+        assertThrows(IndexOutOfBoundsException.class, () -> l.get(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> l.get(3));
+    }
 }
