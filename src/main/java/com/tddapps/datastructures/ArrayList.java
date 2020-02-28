@@ -1,7 +1,9 @@
 package com.tddapps.datastructures;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class ArrayList<T> implements Collection<T> {
     static final int DEFAULT_CAPACITY = 10;
@@ -11,19 +13,19 @@ public class ArrayList<T> implements Collection<T> {
     private long changeOperationsCount = 0;
     private Object[] data;
 
-    public ArrayList(){
+    public ArrayList() {
         this(DEFAULT_CAPACITY);
     }
 
-    public ArrayList(int initialCapacity){
-        if (initialCapacity < 0){
+    public ArrayList(int initialCapacity) {
+        if (initialCapacity < 0) {
             throw new IllegalArgumentException("initialCapacity cannot be negative");
         }
 
         data = new Object[initialCapacity];
     }
 
-    public int capacity(){
+    public int capacity() {
         return data.length;
     }
 
@@ -45,7 +47,7 @@ public class ArrayList<T> implements Collection<T> {
     public boolean add(T t) {
         trackModification();
 
-        if (isFull()){
+        if (isFull()) {
             doubleCapacity();
         }
 
@@ -59,11 +61,11 @@ public class ArrayList<T> implements Collection<T> {
         trackModification();
         int additionsCount = c.size();
 
-        if (additionsCount == 0){
+        if (additionsCount == 0) {
             return false;
         }
 
-        if (isFull(additionsCount)){
+        if (isFull(additionsCount)) {
             growCapacityToFit(additionsCount);
         }
 
@@ -81,7 +83,7 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        if (isEmpty()){
+        if (isEmpty()) {
             return false;
         }
 
@@ -110,8 +112,8 @@ public class ArrayList<T> implements Collection<T> {
     public <T1> T1[] toArray(T1[] a) {
         var result = a;
 
-        if (a.length < size){
-            result = (T1[])Array.newInstance(a.getClass().getComponentType(), size);
+        if (a.length < size) {
+            result = (T1[]) Array.newInstance(a.getClass().getComponentType(), size);
         }
 
         System.arraycopy(data, 0, result, 0, size);
@@ -122,7 +124,7 @@ public class ArrayList<T> implements Collection<T> {
     public boolean remove(Object o) {
         var index = indexOf(o);
 
-        if (index == NOT_FOUND){
+        if (index == NOT_FOUND) {
             return false;
         }
 
@@ -131,7 +133,7 @@ public class ArrayList<T> implements Collection<T> {
         shiftLeftAt(index);
         size--;
 
-        if (isLessThanHalfFull()){
+        if (isLessThanHalfFull()) {
             halveCapacity();
         }
 
@@ -142,15 +144,15 @@ public class ArrayList<T> implements Collection<T> {
     public boolean removeAll(Collection<?> c) {
         var indexesToRemove = new ArrayList<Integer>(size);
 
-        for (Object o : c){
+        for (Object o : c) {
             for (int i = 0; i < size; i++) {
-                if (containsObjectAt(o, i)){
+                if (containsObjectAt(o, i)) {
                     indexesToRemove.add(i);
                 }
             }
         }
 
-        if (indexesToRemove.isEmpty()){
+        if (indexesToRemove.isEmpty()) {
             return false;
         }
 
@@ -168,7 +170,7 @@ public class ArrayList<T> implements Collection<T> {
             size--;
         }
 
-        if (isLessThanHalfFull()){
+        if (isLessThanHalfFull()) {
             halveCapacity();
         }
 
@@ -179,9 +181,9 @@ public class ArrayList<T> implements Collection<T> {
     public boolean retainAll(Collection<?> c) {
         var indexesToPreserve = new ArrayList<Integer>(size);
 
-        for (Object o : c){
+        for (Object o : c) {
             for (int i = 0; i < size; i++) {
-                if (containsObjectAt(o, i)){
+                if (containsObjectAt(o, i)) {
                     indexesToPreserve.add(i);
                 }
             }
@@ -193,7 +195,7 @@ public class ArrayList<T> implements Collection<T> {
                 .sorted()
                 .toArray(Integer[]::new);
 
-        if (indexes.length == size){
+        if (indexes.length == size) {
             return false;
         }
 
@@ -203,7 +205,7 @@ public class ArrayList<T> implements Collection<T> {
             var currIdx = indexes[i];
             var nextIdx = indexes[i + 1];
             var diff = nextIdx - currIdx;
-            if (diff > 1){
+            if (diff > 1) {
                 var shiftStartIndex = currIdx + 1;
                 var shiftSize = diff - 1;
                 shiftLeftAt(shiftStartIndex, shiftSize);
@@ -213,7 +215,7 @@ public class ArrayList<T> implements Collection<T> {
 
         size = indexes.length;
 
-        if (isLessThanHalfFull()){
+        if (isLessThanHalfFull()) {
             halveCapacity();
         }
 
@@ -228,19 +230,59 @@ public class ArrayList<T> implements Collection<T> {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        var that = (ArrayList<T>)o;
+
+        if (this.size != that.size) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size; i++) {
+            var thisElem = this.data[i];
+            var thatElem = that.data[i];
+
+            if (thisElem == null) {
+                if (thatElem != null) {
+                    return false;
+                }
+            } else {
+                if (!thisElem.equals(thatElem)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        int result = 7 * Objects.hash(size);
+
+        for (int i = 0; i < size; i++) {
+            int elementHash = 0;
+            if (data[i] != null) {
+                elementHash = data[i].hashCode();
+            }
+
+            result = 31 * result + elementHash;
+        }
+
+        return result;
     }
 
     private boolean isFull() {
         return isFull(1);
     }
 
-    private boolean isFull(int additionalCount){
+    private boolean isFull(int additionalCount) {
         return available() < additionalCount;
     }
 
@@ -248,7 +290,7 @@ public class ArrayList<T> implements Collection<T> {
         return available() > size;
     }
 
-    private void growCapacityToFit(int additionalCount){
+    private void growCapacityToFit(int additionalCount) {
         changeCapacity(additionalCount - available());
     }
 
@@ -256,20 +298,20 @@ public class ArrayList<T> implements Collection<T> {
         changeCapacity(Math.max(1, capacity()));
     }
 
-    private void halveCapacity(){
+    private void halveCapacity() {
         int half = capacity() >> 1;
         changeCapacity(-half);
     }
 
-    private void changeCapacity(int delta){
+    private void changeCapacity(int delta) {
         var newData = new Object[capacity() + delta];
         System.arraycopy(data, 0, newData, 0, size);
         data = newData;
     }
 
-    private int indexOf(Object o){
+    private int indexOf(Object o) {
         for (int i = 0; i < size; i++) {
-            if (containsObjectAt(o, i)){
+            if (containsObjectAt(o, i)) {
                 return i;
             }
         }
@@ -277,24 +319,24 @@ public class ArrayList<T> implements Collection<T> {
         return NOT_FOUND;
     }
 
-    private boolean containsObjectAt(Object o, int index){
+    private boolean containsObjectAt(Object o, int index) {
         var e = data[index];
         return (o == null && e == null) ||
                 (e != null && e.equals(o));
     }
 
-    private void decrementBy(Integer[] arr, int value){
+    private void decrementBy(Integer[] arr, int value) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] -= value;
         }
     }
 
-    private void shiftLeftAt(int index){
+    private void shiftLeftAt(int index) {
         shiftLeftAt(index, 1);
     }
 
-    private void shiftLeftAt(int index, int count){
-        for (int i = index + count; i < size; i++){
+    private void shiftLeftAt(int index, int count) {
+        for (int i = index + count; i < size; i++) {
             data[i - count] = data[i];
         }
     }

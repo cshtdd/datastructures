@@ -656,4 +656,37 @@ public class ArrayListTest {
         assertArrayEquals(new String[] { "y" }, l.toArray());
         assertEquals(4, l.capacity());
     }
+
+    @Test
+    void ListWithTheSameElementsInTheSameOrderAreEqualEvenWhenCapacitiesDiffer(){
+        int x = 2;
+        int y = 3;
+        int z = 4;
+
+        var l1 = new ArrayList<>(100);
+        var l2 = new ArrayList<>(1000);
+        var l3 = new ArrayList<>();
+        assertEquals(l1, l2);
+        assertEquals(l2, l3);
+        assertEquals(l1.hashCode(), l2.hashCode());
+        assertEquals(l2.hashCode(), l3.hashCode());
+
+        l1.add(x);
+        l1.add(y);
+        l1.add(z);
+
+        l2.add(x);
+        l2.add(y);
+        l2.add(z);
+
+        l3.add(z);
+        l3.add(y);
+        l3.add(x);
+
+        assertEquals(l1, l2);
+        assertEquals(l1.hashCode(), l2.hashCode());
+
+        assertNotEquals(l2, l3);
+        assertNotEquals(l2.hashCode(), l3.hashCode());
+    }
 }
