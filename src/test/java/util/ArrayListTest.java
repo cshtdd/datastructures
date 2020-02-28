@@ -70,6 +70,18 @@ public class ArrayListTest {
     }
 
     @Test
+    void CanAttemptToRetainAllWhileIteratingWhenAllElementsAreKept(){
+        var l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+
+        l.forEach(i -> l.retainAll(new ArrayList<>(){{
+            add("1");
+            add("2");
+        }}));
+    }
+
+    @Test
     void CannotAddAnEmptyListDuringAnIteration(){
         var l = new ArrayList<>();
         l.add("1");
